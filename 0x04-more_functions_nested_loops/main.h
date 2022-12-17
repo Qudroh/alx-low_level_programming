@@ -12,5 +12,6 @@ void print_diagona(int n);
 void print_square(int size);
 void print_square(int size);
 void print_triangle(int size);
+_putchar.c(int c);
 
 #endif
