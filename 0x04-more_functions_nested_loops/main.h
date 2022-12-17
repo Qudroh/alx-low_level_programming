@@ -12,6 +12,7 @@ void print_diagona(int n);
 void print_square(int size);
 void print_square(int size);
 void print_triangle(int size);
-_putchar(int c);
+int _putchar(char c);
+void print_number(int n);
 
 #endif
