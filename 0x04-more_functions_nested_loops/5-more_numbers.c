@@ -2,6 +2,7 @@
 
 /**
  * more_numbers - print more num
+ * Return: 0
 */
 
 void more_numbers(void)
