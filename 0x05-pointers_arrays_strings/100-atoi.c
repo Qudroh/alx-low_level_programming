@@ -1,7 +1,7 @@
 #include "main.h"
 /**
  * _atoi - convert string to an int
- * @s: pointer to a char string
+ * @*s: pointer to a char string
  *
  * Return: void
 */
@@ -28,4 +28,5 @@ int _atoi(char *s)
 		} while (*temp >= '0' && *temp <= '9');
 	}
 	return (num * sign);
+
 }
