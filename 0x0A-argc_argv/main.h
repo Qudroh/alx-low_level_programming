@@ -3,3 +3,4 @@
 
 int _putchar(char c);
 nt main(int argc __attribute__((unused)), char *argv[]);
+int main(int argc, char *argv[]);
