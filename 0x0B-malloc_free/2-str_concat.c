@@ -7,12 +7,11 @@
  * a NULL string is treated as an empty str
  * @s1: pointer to str
  * @s2: pointer to str
- * @size: size of str
  * Return: pointer to newly allocated memory
 */
 char *str_concat(char *s1, char *s2)
 {
-	unsigned int len1, len2, i, j;
+	unsigned int len1, len2, size, i, j;
 	char *nstr;
 
 	if (s1 == NULL)
