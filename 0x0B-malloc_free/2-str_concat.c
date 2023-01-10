@@ -7,6 +7,7 @@
  * a NULL string is treated as an empty str
  * @s1: pointer to str
  * @s2: pointer to str
+ * @size: size of str
  * Return: pointer to newly allocated memory
 */
 char *str_concat(char *s1, char *s2)
@@ -20,7 +21,7 @@ char *str_concat(char *s1, char *s2)
 		s2 = "";
 	len1 = 0;
 	while (s1[len1] != '\0')
-		len++;
+		len1++;
 	len2 = 0;
 	while (s2[len2] != '\0')
 		len2++;
