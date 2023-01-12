@@ -1,6 +1,6 @@
+#include <stdlib.h>
+#include <stdlib.h>
 #include "main.h"
-#include <stdlib.h>
-#include <stdlib.h>
 
 /**
  * _strlen - calculate and return string length
@@ -15,7 +15,6 @@ int _strlen(char *string)
 
 	return (i);
 }
-
 /**
  * string_nconcat - concat n bytes of  string to another
  * @s1: str to append to
