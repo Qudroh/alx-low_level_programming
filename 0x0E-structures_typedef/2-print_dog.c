@@ -5,15 +5,25 @@
 /**
  * print_dog - prints a struct dog
  * @d: the struct dog to be printed
+ * Return: void
 */
 void print_dog(struct dog *d)
 {
-	if (d == NULL)
+	if (d == 0)
+	{
 		return;
-	if (d->name == NULL)
-		d->name = "(nil)";
-	if (d->owner == NULL)
-		d->owner = "(nil)";
+	}
+	else
+	{
+		if (d->name == NULL)
+			printf("Nane: (nil)\n");
+		else
+			printf("Name: %s\n", d->name);
+		printf("Age: %f\n", d->age);
 
-	printf("Name: %s\nAge; %f\nOwner; %s\n", d->name, d->age, d->owner);
+		if (d->owner == NULL)
+			printf("Owner: (nil)\n");
+		else
+			printf("Owner: %s\n", d->owner);
+	}
 }
