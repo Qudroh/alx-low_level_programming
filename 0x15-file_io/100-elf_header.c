@@ -15,7 +15,7 @@ void print_abi(unsigned char *e_ident);
 void print_osabi(unsigned char *e_ident);
 void print_type(unsigned int e_type, unsigned char *e_ident);
 void print_entry(unsigned long int e_entry, unsigned char *e_ident);
-void clos_elf;
+void close_elf(int elf);
 
 /**
  * check_elf - checks if a file is an ELF file
@@ -32,7 +32,7 @@ void check_elf(unsigned char *e_ident)
 		    e_ident[index] != 'L' &&
 		    e_ident[index] != 'F')
 		{
-			dprintf(STDERR_FILENO, "Error: Nt an ELF fuile\n");
+			dprintf(STDERR_FILENO, "Error: Not an ELF file\n");
 			exit(98);
 		}
 	}
@@ -53,7 +53,7 @@ void print_magic(unsigned char *e_ident)
 		printf("%02x", e_ident[index]);
 
 		if (index == EI_NIDENT - 1)
-			printf(\n);
+			printf("\n");
 		else
 			printf(" ");
 	}
@@ -65,7 +65,7 @@ void print_magic(unsigned char *e_ident)
  */
 void print_class(unsigned char *e_ident)
 {
-	printf("  Class:                            ");
+	printf("  Class:            ");
 
 	switch (e_ident[EI_CLASS])
 	{
@@ -73,7 +73,7 @@ void print_class(unsigned char *e_ident)
 		printf("none\n");
 		break;
 	case ELFCLASS32:
-		printf("ELF32\n-");
+		printf("ELF32\n");
 		break;
 	case ELFCLASS64:
 		printf("ELF64\n");
@@ -89,21 +89,21 @@ void print_class(unsigned char *e_ident)
  */
 void print_data(unsigned char *e_ident)
 {
-	printf("  Data:                             ");
+	printf("  Data:            ");
 
 	switch (e_ident[EI_DATA])
 	{
-		case ELFDATANONE:
-			printf("none\n");
-			break;
-		case ELFDATA2LSB:
-			printf("2's complement, little endian\n");
-			break;
-		case ELFDATA2MSB:
-			printf("2's complement, big endian\n");
-			break;
-		default:
-			printf("unknown: %x>\n", e_ident[EI_CLASS]);
+	case ELFDATANONE:
+		printf("none\n");
+		break;
+	case ELFDATA2LSB:
+		printf("2's complement, little endian\n");
+		break;
+	case ELFDATA2MSB:
+		printf("2's complement, big endian\n");
+		break;
+	default:
+		printf("unknown: %x>\n", e_ident[EI_CLASS]);
 	}
 }
 
@@ -113,7 +113,7 @@ void print_data(unsigned char *e_ident)
  */
 void print_version(unsigned char *e_ident)
 {
-	printf("  Version:                           %d",
+	printf("  Version:           %d",
 		e_ident[EI_VERSION]);
 
 	switch (e_ident[EI_VERSION])
@@ -133,7 +133,7 @@ void print_version(unsigned char *e_ident)
  */
 void print_osabi(unsigned char *e_ident)
 {
-	printf("  OS/ABI:                              ");
+	printf("  OS/ABI:            ");
 
 	switch (e_ident[EI_OSABI])
 	{
@@ -156,10 +156,10 @@ void print_osabi(unsigned char *e_ident)
 		printf("UNIX - IRIX\n");
 		break;
 	case ELFOSABI_FREEBSD:
-		printf("UNIX - freeBSD\n");
+		printf("UNIX - FreeBSD\n");
 		break;
 	case ELFOSABI_TRU64:
-		printf("UNIX - TRU64\N");
+		printf("UNIX - TRU64\n");
 		break;
 	case ELFOSABI_ARM:
 		printf("ARM\n");
@@ -178,7 +178,7 @@ void print_osabi(unsigned char *e_ident)
  */
 void print_abi(unsigned char *e_ident)
 {
-	printf("  ABI Version:                         %d\n",
+	printf("  ABI Version:            %d\n",
 		e_ident[EI_ABIVERSION]);
 }
 
@@ -192,7 +192,7 @@ void print_type(unsigned int e_type, unsigned char *e_ident)
 	if (e_ident[EI_DATA] == ELFDATA2MSB)
 		e_type >>= 8;
 
-	printf("  Type:                                  ");
+	printf("  Type:               ");
 
 	switch (e_type)
 	{
@@ -228,15 +228,15 @@ void print_entry(unsigned long int e_entry, unsigned char *e_ident)
 	if (e_ident[EI_DATA] == ELFDATA2MSB)
 	{
 		e_entry = ((e_entry << 8) & 0xFF00FF00) |
-			  ((e_entry >> 8) & 0xFF00FF0);
+			  ((e_entry >> 8) & 0xFF00FF);
 		e_entry = (e_entry << 16) | (e_entry >> 16);
 	}
 
 	if (e_ident[EI_CLASS] == ELFCLASS32)
-		printf("%#1x\n", (unsigned int)e_entry);
+		printf("%#lx\n", (unsigned int)e_entry);
 
 	else
-		printf("%#1x\n", e_entry);
+		printf("%#lx\n", e_entry);
 }
 
 /**
@@ -284,7 +284,7 @@ int main(int __attribute__((__unused__)) argc, char *argv[])
 	{
 		free(header);
 		close_elf(o);
-		dprintf(STDERR_FILENO, "Error: '%s' : No such file\n", argv[1]);
+		dprintf(STDERR_FILENO, "Error: '%s': No such file\n", argv[1]);
 		exit(98);
 	}
 
@@ -297,7 +297,7 @@ int main(int __attribute__((__unused__)) argc, char *argv[])
 	print_osabi(header->e_ident);
 	print_abi(header->e_ident);
 	print_type(header->e_type, header->e_ident);
-	print_entry(header->e_enry, header->e_ident);
+	print_entry(header->e_entry, header->e_ident);
 
 	free(header);
 	close_elf(o);
